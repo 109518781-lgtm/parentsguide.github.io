@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>家长行动决策助手</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f6f7fb;
+      color: #1f2937;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 0 0 8px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      line-height: 1.4;
+    }
+
+    .sub {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 14px 0 8px;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      font: inherit;
+    }
+
+    input, select, textarea {
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: #fff;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    button {
+      max-width: 320px;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: #2563eb;
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    button.secondary {
+      background: #0f766e;
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    button:hover {
+      opacity: 0.95;
+    }
+
+    .muted {
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 8px;
+      line-height: 1.7;
+    }
+
+    .center-text {
+      text-align: center;
+    }
+
+    .status-box {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px;
+      line-height: 1.8;
+      font-size: 15px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .usage-hint {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #6b7280;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .action-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .result-panel {
+      margin-top: 28px;
+      border-top: 3px solid rgba(37, 99, 235, 0.12);
+      padding-top: 20px;
+    }
+
+    .result {
+      word-break: break-word;
+    }
+
+    .result-main {
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      border-radius: 14px;
+      padding: 14px;
+      font-weight: 600;
+      line-height: 1.8;
+      margin-bottom: 14px;
+      font-size: 15px;
+    }
+
+    .ai-card {
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+
+    .ai-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #1f2937;
+    }
+
+    .ai-content {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #374151;
+      white-space: pre-wrap;
+    }
+
+    .collapsed {
+      max-height: 84px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .collapsed::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 28px;
+      background: linear-gradient(to bottom, rgba(248,250,252,0), rgba(248,250,252,1));
+    }
+
+    .expand-btn {
+      font-size: 12px;
+      color: #2563eb;
+      margin-top: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .plain-result {
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #374151;
+      white-space: pre-wrap;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+    }
+
+    .modal-mask {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-content {
+      position: relative;
+      z-index: 2;
+      width: calc(100% - 32px);
+      max-width: 520px;
+      margin: 8vh auto 0;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.22);
+      animation: popIn 0.22s ease;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 50%;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .modal-badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .modal-title {
+      font-size: 24px;
+      margin: 0 0 12px;
+      line-height: 1.4;
+    }
+
+    .modal-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #374151;
+      margin-bottom: 18px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .price-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 14px 12px;
+      text-align: center;
+      background: #fafafa;
+    }
+
+    .price-card.featured {
+      border: 2px solid #2563eb;
+      background: #eff6ff;
+    }
+
+    .price-name {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .price-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+
+    .price-note {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    .qr-wrap {
+      text-align: center;
+      padding-top: 4px;
+    }
+
+    .qr-img {
+      width: 180px;
+      max-width: 100%;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .qr-text {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #6b7280;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 1024px) {
+      .wrap {
+        max-width: 760px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .wrap {
+        padding: 16px 12px 32px;
+      }
+
+      .card {
+        padding: 16px;
+        border-radius: 14px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      input, select, textarea, button {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .modal-content {
+        margin-top: 5vh;
+        padding: 22px 16px;
+        border-radius: 20px;
+      }
+
+      .modal-title {
+        font-size: 20px;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .wrap {
+        padding: 12px 10px 24px;
+      }
+
+      .card {
+        padding: 14px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      h2 {
+        font-size: 17px;
+      }
+
+      .sub,
+      .muted,
+      .label,
+      .usage-hint,
+      .qr-text,
+      .price-note,
+      .ai-title,
+      .ai-content,
+      .plain-result {
+        font-size: 13px;
+      }
+
+      textarea {
+        min-height: 100px;
+      }
+
+      button {
+        padding: 13px 14px;
+      }
+
+      .result-main {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>家长行动决策助手</h1>
+      <div class="sub">
+        很多问题不是不会教，而是“用错方式”。这里基于孩子当前状态、TimeWaver数据库、科学养育大数据进行推演，帮助家长更早看清不同做法可能带来的结果。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>第一步：绑定孩子信息</h2>
+      <label class="label" for="studentName">学生姓名</label>
+      <input id="studentName" type="text" placeholder="请输入学生姓名" />
+
+      <label class="label" for="birthDate">出生年月日</label>
+      <input id="birthDate" type="date" />
+
+      <div class="btn-row">
+        <button id="queryBtn" class="secondary">查询近期状态</button>
+      </div>
+      <div class="muted center-text">建议先查询孩子近期状态，再决定是否继续填写拟采取行动。</div>
+    </div>
+
+    <div class="card hidden" id="statusCard">
+      <h2>孩子近期状态</h2>
+      <div id="statusResult" class="status-box">这里会显示近期状态。</div>
+    </div>
+
+    <div class="card" id="analysisCard">
+      <h2>第二步：选择问题并填写拟采取行动</h2>
+
+      <label class="label" for="issueType">问题类型</label>
+      <select id="issueType">
+        <option value="">请选择问题类型</option>
+        <option>学习问题</option>
+        <option>学习意愿问题</option>
+        <option>休学/拒学问题</option>
+        <option>情绪问题</option>
+        <option>亲子沟通问题</option>
+        <option>家庭教育策略问题</option>
+      </select>
+
+      <label class="label" for="actionPlan">家长拟采取的行动</label>
+      <textarea id="actionPlan" placeholder="例如：我想减少说教，先不逼他做难题，但会要求他每天保持基础学习。"></textarea>
+
+      <div class="action-area">
+        <button id="analyzeBtn">查看推演分析</button>
+        <div id="usageHint" class="usage-hint"></div>
+        <div class="muted center-text">建议先完成孩子绑定与近期状态查询，再继续填写拟采取行动并查看推演分析。</div>
+      </div>
+
+      <div class="card result-panel">
+        <h2>📊 推演分析结果</h2>
+        <div id="result" class="result">
+          <div class="plain-result">这里会显示推演分析结果。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="paymentModal" class="modal hidden">
+    <div class="modal-mask"></div>
+
+    <div class="modal-content">
+      <button id="closeModalBtn" class="modal-close">×</button>
+
+      <div class="modal-badge" id="modalUsageText">免费体验已用完</div>
+
+      <h2 class="modal-title">继续解锁更多推演分析</h2>
+
+      <div class="modal-desc">
+        很多时候，家长不是不努力，而是 <strong>用错了方式</strong>。
+        推演分析的价值，是帮你提前看到：<strong>如果这样做，孩子可能会发生什么。</strong>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-name">单次</div>
+          <div class="price-value">¥3</div>
+          <div class="price-note">适合临时单次咨询</div>
+        </div>
+
+        <div class="price-card featured">
+          <div class="price-name">月卡</div>
+          <div class="price-value">¥29</div>
+          <div class="price-note">15次｜约1.9元/次</div>
+        </div>
+
+        <div class="price-card">
+          <div class="price-name">季卡</div>
+          <div class="price-value">¥69</div>
+          <div class="price-note">50次｜长期更划算</div>
+        </div>
+      </div>
+
+      <div class="qr-wrap">
+        <img
+          id="paymentQr"
+          src="./payment-qrcode.png"
+          alt="付款二维码"
+          class="qr-img"
+        />
+        <div class="qr-text">扫码付款后，可联系你开通继续使用权限</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const queryBtn = document.getElementById('queryBtn');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const statusCard = document.getElementById('statusCard');
+    const statusResult = document.getElementById('statusResult');
+    const result = document.getElementById('result');
+
+    let studentDatabase = [];
+    let boundStudent = null;
+
+    const FREE_USAGE_LIMIT = 5;
+
+    function getUsageCount() {
+      return Number(localStorage.getItem('usageCount') || 0);
+    }
+
+    function increaseUsageCount() {
+      const current = getUsageCount();
+      localStorage.setItem('usageCount', current + 1);
+    }
+
+    function getRemainingUsage() {
+      return Math.max(0, FREE_USAGE_LIMIT - getUsageCount());
+    }
+
+    function showPaymentCard() {
+      const modal = document.getElementById('paymentModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function hidePaymentCard() {
+      const modal = document.getElementById('paymentModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function updateUsageHint() {
+      const hint = document.getElementById('usageHint');
+      if (!hint) return;
+
+      const remaining = getRemainingUsage();
+
+      if (remaining > 2) {
+        hint.textContent = `还可免费体验 ${remaining} 次`;
+      } else if (remaining > 0) {
+        hint.textContent = `仅剩 ${remaining} 次免费体验`;
+      } else {
+        hint.textContent = `免费体验已用完`;
+      }
+    }
+
+    function updateModalUsageText() {
+      const el = document.getElementById('modalUsageText');
+      if (!el) return;
+
+      const remaining = getRemainingUsage();
+
+      if (remaining > 0) {
+        el.textContent = `还可免费体验 ${remaining} 次`;
+      } else {
+        el.textContent = `免费体验已用完`;
+      }
+    }
+
+    function renderPlainResult(message) {
+      result.innerHTML = `<div class="plain-result">${message}</div>`;
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function formatResult(text) {
+      const sections = text.split("【").filter(Boolean);
+
+      if (!sections.length) {
+        return `<div class="plain-result">${escapeHtml(text)}</div>`;
+      }
+
+      let html = "";
+
+      sections.forEach(section => {
+        const [title, ...rest] = section.split("】");
+        const content = rest.join("】").trim();
+        const safeContent = escapeHtml(content);
+        const isLong = content.length > 90;
+
+        if (title.includes("一句核心判断")) {
+          html += `
+            <div class="result-main">${safeContent}</div>
+          `;
+        } else {
+          html += `
+            <div class="ai-card">
+              <div class="ai-title">${escapeHtml(title)}</div>
+              <div class="ai-content ${isLong ? "collapsed" : ""}">${safeContent}</div>
+              ${isLong ? `<div class="expand-btn">展开更多</div>` : ""}
+            </div>
+          `;
+        }
+      });
+
+      return html;
+    }
+
+    async function loadStudentDatabase() {
+      try {
+        const response = await fetch('./students.json');
+        if (!response.ok) {
+          throw new Error('无法读取 students.json');
+        }
+        studentDatabase = await response.json();
+        console.log('学生数据库加载成功', studentDatabase);
+      } catch (error) {
+        console.error('加载 students.json 失败：', error);
+        statusCard.classList.remove('hidden');
+        statusResult.textContent = '学生数据库加载失败。请确认 students.json 与 index.html 在同一个文件夹，并且使用 Live Server 打开网页。';
+      }
+    }
+
+    function findStudent(name, birthDate) {
+      return studentDatabase.find(
+        item => item.name === name && item.birth_date === birthDate
+      );
+    }
+
+    function summarizeTimewaver(rawList) {
+      if (!rawList || !rawList.length) {
+        return '当前暂无近期状态记录。';
+      }
+
+      const rawText = rawList.join('；');
+
+      if (rawText.includes('对学习任务有兴趣') || rawText.includes('心流临界状态')) {
+        return '近期孩子并不是完全没有学习动力，内在仍有可以被带动的部分。当前更适合用较稳的节奏去承接，而不是过急推进。';
+      }
+
+      if (rawText.includes('学习过载状态') || rawText.includes('容易紧张') || rawText.includes('情绪低落')) {
+        return '近期孩子更像处在比较疲惫、比较绷紧的状态里。表面上可能还在坚持，但内在压力较大，容易影响学习效率和情绪稳定。现阶段更适合先减轻负担、稳住节奏。';
+      }
+
+      if (rawText.includes('学习涣散状态') && rawText.includes('焦虑')) {
+        return '近期孩子整体状态有些散，也带着明显的紧张和焦虑。现在更适合先帮助她把节奏稳下来，而不是单纯增加要求。';
+      }
+
+      if (rawText.includes('在意同伴与社会关系') || rawText.includes('难以获得安全或接纳')) {
+        return '近期孩子可能比较在意同伴关系和外界看法，这会影响她在学习中的稳定度和进入感。现阶段先帮助她建立安全感和被理解的感受，会更有利于后续学习推进。';
+      }
+
+      if (rawText.includes('过度期望型家长') || rawText.includes('无法控制焦虑')) {
+        return '近期孩子整体比较紧张，不太容易真正放松下来。这样的状态会影响她在学习上的专注和吸收，现阶段更适合先稳节奏、减轻压力。';
+      }
+
+      return '近期状态提示：当前不仅要看学习表现，也要结合情绪承受度和外部压力来判断。现阶段更适合先看状态，再决定推进方式。';
+    }
+
+    function queryStudentStatus() {
+      const studentName = document.getElementById('studentName').value.trim();
+      const birthDate = document.getElementById('birthDate').value;
+
+      if (!studentName || !birthDate) {
+        statusCard.classList.remove('hidden');
+        statusResult.textContent = '请先完整填写学生姓名和出生年月日，再查询近期状态。';
+        statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return null;
+      }
+
+      const student = findStudent(studentName, birthDate);
+      statusCard.classList.remove('hidden');
+
+      if (!student) {
+        boundStudent = null;
+        statusResult.textContent = '暂未查询到匹配的学生档案。请检查姓名和出生年月日是否正确。';
+        statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return null;
+      }
+
+      boundStudent = student;
+      const recentStatus = summarizeTimewaver(student.timewaver_raw);
+
+      statusResult.textContent = `【学生】${student.name}
+【最近更新】${student.updated_at}
+
+【近期状态】
+${recentStatus}`;
+
+      statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return student;
+    }
+
+    queryBtn.addEventListener('click', () => {
+      queryBtn.textContent = '查询中...';
+      queryBtn.disabled = true;
+
+      setTimeout(() => {
+        queryStudentStatus();
+        queryBtn.textContent = '查询近期状态';
+        queryBtn.disabled = false;
+      }, 300);
+    });
+
+    analyzeBtn.addEventListener('click', async () => {
+      const usage = getUsageCount();
+
+      if (usage >= FREE_USAGE_LIMIT) {
+        renderPlainResult('免费体验次数已用完，请查看弹窗中的开通方式。');
+        showPaymentCard();
+        updateModalUsageText();
+        return;
+      } else {
+        hidePaymentCard();
+      }
+
+      const issueType = document.getElementById('issueType').value;
+      const actionPlan = document.getElementById('actionPlan').value.trim();
+
+      const student = boundStudent || queryStudentStatus();
+
+      if (!student) {
+        renderPlainResult('请先成功绑定孩子档案并查询到近期状态，再继续查看推演分析。');
+        result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      if (!issueType || !actionPlan) {
+        renderPlainResult('请先选择问题类型，并填写家长拟采取的行动。');
+        result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      const recentStatus = summarizeTimewaver(student.timewaver_raw);
+
+      analyzeBtn.textContent = '分析中...';
+      analyzeBtn.disabled = true;
+      renderPlainResult('正在调用AI进行分析，请稍候...');
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      try {
+        const response = await fetch('http://localhost:3000/api/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            studentName: student.name,
+            birthDate: student.birth_date,
+            issueType: issueType,
+            actionPlan: actionPlan,
+            recentStatus: recentStatus
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.text) {
+          const formatted = data.text
+            .replace("【一句核心判断】", "【一句核心判断】")
+            .replace("【更稳的做法】", "【更稳的做法】")
+            .replace("【家长可以这样说】", "【家长可以这样说】");
+
+          result.innerHTML = formatResult(formatted);
+          increaseUsageCount();
+          updateUsageHint();
+
+          const updatedUsage = getUsageCount();
+          if (updatedUsage >= FREE_USAGE_LIMIT) {
+            showPaymentCard();
+            updateModalUsageText();
+          }
+        } else if (data.error) {
+          renderPlainResult('AI分析失败：' + data.error);
+        } else {
+          renderPlainResult('未获取到分析结果，请稍后重试。');
+        }
+      } catch (error) {
+        console.error('AI请求失败：', error);
+        renderPlainResult('AI服务连接失败，请确认服务器已启动，并且当前网页是通过 Live Server 打开的。');
+      } finally {
+        analyzeBtn.textContent = '查看推演分析';
+        analyzeBtn.disabled = false;
+      }
+
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', () => {
+        hidePaymentCard();
+      });
+    }
+
+    const modalMask = document.querySelector('.modal-mask');
+    if (modalMask) {
+      modalMask.addEventListener('click', () => {
+        hidePaymentCard();
+      });
+    }
+
+    document.addEventListener('click', function (e) {
+      if (e.target.classList.contains('expand-btn')) {
+        const content = e.target.previousElementSibling;
+        content.classList.remove('collapsed');
+        e.target.remove();
+      }
+    });
+
+    loadStudentDatabase();
+    updateUsageHint();
+    updateModalUsageText();
+  </script>
+</body>
+</html>
