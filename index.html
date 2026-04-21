@@ -804,7 +804,7 @@ ${recentStatus}`;
       result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
       try {
-        const response = await fetch('https://parentsguide-api.109518781.workers.dev/api/analyze', {
+        const response = await fetch(fetch('https://api.gyparentng-ai.cn/api/analyze', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -842,7 +842,7 @@ ${recentStatus}`;
         }
       } catch (error) {
         console.error('AI请求失败：', error);
-        renderPlainResult('AI服务连接失败，请确认服务器已启动，并且当前网页是通过 Live Server 打开的。');
+        renderPlainResult('AI服务连接失败，请确认服务器已启动。');
       } finally {
         analyzeBtn.textContent = '查看推演分析';
         analyzeBtn.disabled = false;
