@@ -2,10 +2,12 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>家长行动决策助手</title>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -139,6 +141,7 @@
       color: #6b7280;
       text-align: center;
       line-height: 1.6;
+      font-weight: 500;
     }
 
     .action-area {
@@ -558,351 +561,362 @@
   </div>
 
   <script>
-    const queryBtn = document.getElementById('queryBtn');
-    const analyzeBtn = document.getElementById('analyzeBtn');
-    const statusCard = document.getElementById('statusCard');
-    const statusResult = document.getElementById('statusResult');
-    const result = document.getElementById('result');
+    (function(){
+      // DOM 元素
+      const queryBtn = document.getElementById('queryBtn');
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      const statusCard = document.getElementById('statusCard');
+      const statusResult = document.getElementById('statusResult');
+      const result = document.getElementById('result');
 
-    let studentDatabase = [];
-    let boundStudent = null;
+      // 全局数据
+      let studentDatabase = [];
+      let boundStudent = null;
+      let currentRemainingQuota = null;          // 当前剩余次数（从后端读取）
+      let isQueryingQuota = false;               // 防止重复请求
 
-    const FREE_USAGE_LIMIT = 5;
-
-    function getUsageCount() {
-      return Number(localStorage.getItem('usageCount') || 0);
-    }
-
-    function increaseUsageCount() {
-      const current = getUsageCount();
-      localStorage.setItem('usageCount', current + 1);
-    }
-
-    function getRemainingUsage() {
-      return Math.max(0, FREE_USAGE_LIMIT - getUsageCount());
-    }
-
-    function showPaymentCard() {
-      const modal = document.getElementById('paymentModal');
-      if (modal) {
-        modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-      }
-    }
-
-    function hidePaymentCard() {
-      const modal = document.getElementById('paymentModal');
-      if (modal) {
-        modal.classList.add('hidden');
-        document.body.style.overflow = '';
-      }
-    }
-
-    function updateUsageHint() {
-      const hint = document.getElementById('usageHint');
-      if (!hint) return;
-
-      const remaining = getRemainingUsage();
-
-      if (remaining > 2) {
-        hint.textContent = `还可免费体验 ${remaining} 次`;
-      } else if (remaining > 0) {
-        hint.textContent = `仅剩 ${remaining} 次免费体验`;
-      } else {
-        hint.textContent = `免费体验已用完`;
-      }
-    }
-
-    function updateModalUsageText() {
-      const el = document.getElementById('modalUsageText');
-      if (!el) return;
-
-      const remaining = getRemainingUsage();
-
-      if (remaining > 0) {
-        el.textContent = `还可免费体验 ${remaining} 次`;
-      } else {
-        el.textContent = `免费体验已用完`;
-      }
-    }
-
-    function renderPlainResult(message) {
-      result.innerHTML = `<div class="plain-result">${message}</div>`;
-    }
-
-    function escapeHtml(text) {
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-    }
-
-    function formatResult(text) {
-      const sections = text.split("【").filter(Boolean);
-
-      if (!sections.length) {
-        return `<div class="plain-result">${escapeHtml(text)}</div>`;
+      // ---------- 辅助函数 ----------
+      function showPaymentCard() {
+        const modal = document.getElementById('paymentModal');
+        if (modal) {
+          modal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        }
       }
 
-      let html = "";
+      function hidePaymentCard() {
+        const modal = document.getElementById('paymentModal');
+        if (modal) {
+          modal.classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+      }
 
-      sections.forEach(section => {
-        const [title, ...rest] = section.split("】");
-        const content = rest.join("】").trim();
-        const safeContent = escapeHtml(content);
-        const isLong = content.length > 90;
-
-        if (title.includes("一句核心判断")) {
-          html += `
-            <div class="result-main">${safeContent}</div>
-          `;
+      function updateModalUsageText() {
+        const el = document.getElementById('modalUsageText');
+        if (!el) return;
+        if (currentRemainingQuota !== null && currentRemainingQuota > 0) {
+          el.textContent = `剩余可用次数：${currentRemainingQuota} 次`;
+        } else if (currentRemainingQuota !== null && currentRemainingQuota === 0) {
+          el.textContent = `次数已用完，请充值`;
         } else {
-          html += `
-            <div class="ai-card">
-              <div class="ai-title">${escapeHtml(title)}</div>
-              <div class="ai-content ${isLong ? "collapsed" : ""}">${safeContent}</div>
-              ${isLong ? `<div class="expand-btn">展开更多</div>` : ""}
-            </div>
-          `;
+          el.textContent = `加载中...`;
         }
-      });
+      }
 
-      return html;
-    }
+      function renderPlainResult(message) {
+        result.innerHTML = `<div class="plain-result">${escapeHtml(message)}</div>`;
+      }
 
-    async function loadStudentDatabase() {
-      try {
-        const response = await fetch('./students.json');
-        if (!response.ok) {
-          throw new Error('无法读取 students.json');
+      function escapeHtml(text) {
+        if (!text) return '';
+        return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function formatResult(text) {
+        if (!text) return `<div class="plain-result">未获取到分析结果。</div>`;
+        const sections = text.split("【").filter(Boolean);
+        if (!sections.length) {
+          return `<div class="plain-result">${escapeHtml(text)}</div>`;
         }
-        studentDatabase = await response.json();
-        console.log('学生数据库加载成功', studentDatabase);
-      } catch (error) {
-        console.error('加载 students.json 失败：', error);
-        statusCard.classList.remove('hidden');
-        statusResult.textContent = '学生数据库加载失败。请确认 students.json 与 index.html 在同一个文件夹，并且使用 Live Server 打开网页。';
-      }
-    }
 
-    function findStudent(name, birthDate) {
-      return studentDatabase.find(
-        item => item.name === name && item.birth_date === birthDate
-      );
-    }
+        let html = "";
+        sections.forEach(section => {
+          const [title, ...rest] = section.split("】");
+          const content = rest.join("】").trim();
+          const safeContent = escapeHtml(content);
+          const isLong = content.length > 90;
 
-    function summarizeTimewaver(rawList) {
-      if (!rawList || !rawList.length) {
-        return '当前暂无近期状态记录。';
-      }
-
-      const rawText = rawList.join('；');
-
-      if (rawText.includes('对学习任务有兴趣') || rawText.includes('心流临界状态')) {
-        return '近期孩子并不是完全没有学习动力，内在仍有可以被带动的部分。当前更适合用较稳的节奏去承接，而不是过急推进。';
-      }
-
-      if (rawText.includes('学习过载状态') || rawText.includes('容易紧张') || rawText.includes('情绪低落')) {
-        return '近期孩子更像处在比较疲惫、比较绷紧的状态里。表面上可能还在坚持，但内在压力较大，容易影响学习效率和情绪稳定。现阶段更适合先减轻负担、稳住节奏。';
-      }
-
-      if (rawText.includes('学习涣散状态') && rawText.includes('焦虑')) {
-        return '近期孩子整体状态有些散，也带着明显的紧张和焦虑。现在更适合先帮助她把节奏稳下来，而不是单纯增加要求。';
-      }
-
-      if (rawText.includes('在意同伴与社会关系') || rawText.includes('难以获得安全或接纳')) {
-        return '近期孩子可能比较在意同伴关系和外界看法，这会影响她在学习中的稳定度和进入感。现阶段先帮助她建立安全感和被理解的感受，会更有利于后续学习推进。';
-      }
-
-      if (rawText.includes('过度期望型家长') || rawText.includes('无法控制焦虑')) {
-        return '近期孩子整体比较紧张，不太容易真正放松下来。这样的状态会影响她在学习上的专注和吸收，现阶段更适合先稳节奏、减轻压力。';
-      }
-
-      return '近期状态提示：当前不仅要看学习表现，也要结合情绪承受度和外部压力来判断。现阶段更适合先看状态，再决定推进方式。';
-    }
-
-    function queryStudentStatus() {
-      const studentName = document.getElementById('studentName').value.trim();
-      const birthDate = document.getElementById('birthDate').value;
-
-      if (!studentName || !birthDate) {
-        statusCard.classList.remove('hidden');
-        statusResult.textContent = '请先完整填写学生姓名和出生年月日，再查询近期状态。';
-        statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return null;
-      }
-
-      const student = findStudent(studentName, birthDate);
-      statusCard.classList.remove('hidden');
-
-      if (!student) {
-        boundStudent = null;
-        statusResult.textContent = '暂未查询到匹配的学生档案。请检查姓名和出生年月日是否正确。';
-        statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return null;
-      }
-
-      boundStudent = student;
-      const recentStatus = summarizeTimewaver(student.timewaver_raw);
-
-      statusResult.textContent = `【学生】${student.name}
-【最近更新】${student.updated_at}
-
-【近期状态】
-${recentStatus}`;
-
-      statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      return student;
-    }
-
-    queryBtn.addEventListener('click', () => {
-      queryBtn.textContent = '查询中...';
-      queryBtn.disabled = true;
-
-      setTimeout(() => {
-        queryStudentStatus();
-        queryBtn.textContent = '查询近期状态';
-        queryBtn.disabled = false;
-      }, 300);
-    });
-
-    analyzeBtn.addEventListener('click', async () => {
-      const usage = getUsageCount();
-
-      if (usage >= FREE_USAGE_LIMIT) {
-        renderPlainResult('免费体验次数已用完，请查看弹窗中的开通方式。');
-        showPaymentCard();
-        updateModalUsageText();
-        return;
-      } else {
-        hidePaymentCard();
-      }
-
-      const issueType = document.getElementById('issueType').value;
-      const actionPlan = document.getElementById('actionPlan').value.trim();
-
-      const student = boundStudent || queryStudentStatus();
-
-      if (!student) {
-        renderPlainResult('请先成功绑定孩子档案并查询到近期状态，再继续查看推演分析。');
-        result.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
-
-      if (!issueType || !actionPlan) {
-        renderPlainResult('请先选择问题类型，并填写家长拟采取的行动。');
-        result.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
-
-      const recentStatus = summarizeTimewaver(student.timewaver_raw);
-
-      analyzeBtn.textContent = '分析中...';
-      analyzeBtn.disabled = true;
-      renderPlainResult('正在调用AI进行分析，请稍候...');
-      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      try {
-        const response = await fetch('https://api.gyparentng-ai.cn/api/analyze', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            studentName: student.name,
-            birthDate: student.birth_date,
-            issueType: issueType,
-            actionPlan: actionPlan,
-            recentStatus: recentStatus
-          })
+          if (title.includes("一句核心判断")) {
+            html += `<div class="result-main">${safeContent}</div>`;
+          } else {
+            html += `
+              <div class="ai-card">
+                <div class="ai-title">${escapeHtml(title)}</div>
+                <div class="ai-content ${isLong ? "collapsed" : ""}">${safeContent}</div>
+                ${isLong ? `<div class="expand-btn">展开更多</div>` : ""}
+              </div>
+            `;
+          }
         });
+        return html;
+      }
 
-        const data = await response.json();
+      // 更新页面上的剩余次数提示
+      function updateRemainingQuotaDisplay(quota) {
+        const hint = document.getElementById('usageHint');
+        if (!hint) return;
 
-        if (data.text) {
-          const formatted = data.text
-            .replace("【一句核心判断】", "【一句核心判断】")
-            .replace("【更稳的做法】", "【更稳的做法】")
-            .replace("【家长可以这样说】", "【家长可以这样说】");
+        if (quota === null || quota === undefined) {
+          hint.textContent = `加载中...`;
+          return;
+        }
 
-          result.innerHTML = formatResult(formatted);
-          increaseUsageCount();
-          updateUsageHint();
+        if (quota > 2) {
+          hint.textContent = `✅ 剩余可用次数：${quota} 次`;
+        } else if (quota > 0) {
+          hint.textContent = `⚠️ 仅剩 ${quota} 次，请及时充值`;
+        } else {
+          hint.textContent = `❌ 次数已用完，请充值后使用`;
+        }
+      }
 
-          const updatedUsage = getUsageCount();
-          if (updatedUsage >= FREE_USAGE_LIMIT) {
-            showPaymentCard();
+      // 从后端 KV 查询剩余次数（parentId = 学生姓名_出生日期）
+      async function fetchRemainingQuota(parentId, forceRefresh = false) {
+        if (!parentId) return null;
+        if (isQueryingQuota && !forceRefresh) return currentRemainingQuota;
+        
+        try {
+          isQueryingQuota = true;
+          const response = await fetch('https://api.gyparentng-ai.cn/api/get-quota', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ parentId: parentId })
+          });
+          const data = await response.json();
+          if (data.remainingQuota !== undefined && data.remainingQuota !== null) {
+            currentRemainingQuota = Number(data.remainingQuota);
+            updateRemainingQuotaDisplay(currentRemainingQuota);
             updateModalUsageText();
           }
-        } else if (data.error) {
-          renderPlainResult('AI分析失败：' + data.error);
-        } else {
-          renderPlainResult('未获取到分析结果，请稍后重试。');
+          return currentRemainingQuota;
+        } catch (error) {
+          console.error('查询剩余次数失败:', error);
+          return currentRemainingQuota;
+        } finally {
+          isQueryingQuota = false;
         }
-      } catch (error) {
-        console.error('AI请求失败：', error);
-        renderPlainResult('AI服务连接失败，请确认服务器已启动。');
-      } finally {
-        analyzeBtn.textContent = '查看推演分析';
-        analyzeBtn.disabled = false;
       }
 
-      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    if (closeModalBtn) {
-      closeModalBtn.addEventListener('click', () => {
-        hidePaymentCard();
-      });
-    }
-
-    const modalMask = document.querySelector('.modal-mask');
-    if (modalMask) {
-      modalMask.addEventListener('click', () => {
-        hidePaymentCard();
-      });
-    }
-
-    document.addEventListener('click', function (e) {
-      if (e.target.classList.contains('expand-btn')) {
-        const content = e.target.previousElementSibling;
-        content.classList.remove('collapsed');
-        e.target.remove();
+      // 加载 students.json
+      async function loadStudentDatabase() {
+        try {
+          const response = await fetch('./students.json');
+          if (!response.ok) {
+            throw new Error('无法读取 students.json');
+          }
+          studentDatabase = await response.json();
+          console.log('学生数据库加载成功', studentDatabase);
+        } catch (error) {
+          console.error('加载 students.json 失败：', error);
+          statusCard.classList.remove('hidden');
+          statusResult.textContent = '学生数据库加载失败。请确认 students.json 与 index.html 在同一个文件夹，并且当前通过 https 访问。';
+        }
       }
-    });
 
-    loadStudentDatabase();
-    updateUsageHint();
-    updateModalUsageText();
-    
-    // 更新剩余次数显示
-function updateRemainingQuotaDisplay(quota) {
-  const hint = document.getElementById('usageHint');
-  if (!hint) return;
-  
-  if (quota === null || quota === undefined) {
-    // 如果没拿到，尝试从本地读取（兼容旧逻辑）
-    const remaining = getRemainingUsage();
-    if (remaining > 2) {
-      hint.textContent = `还可免费体验 ${remaining} 次`;
-    } else if (remaining > 0) {
-      hint.textContent = `仅剩 ${remaining} 次免费体验`;
-    } else {
-      hint.textContent = `免费体验已用完`;
-    }
-    return;
-  }
-  
-  if (quota > 2) {
-    hint.textContent = `剩余可用次数：${quota} 次`;
-  } else if (quota > 0) {
-    hint.textContent = `⚠️ 仅剩 ${quota} 次，请及时充值`;
-  } else {
-    hint.textContent = `❌ 次数已用完，请充值后使用`;
-  }
-}
-    
+      function findStudent(name, birthDate) {
+        if (!studentDatabase.length) return null;
+        return studentDatabase.find(
+          item => item.name === name && item.birth_date === birthDate
+        );
+      }
+
+      function summarizeTimewaver(rawList) {
+        if (!rawList || !rawList.length) {
+          return '当前暂无近期状态记录。';
+        }
+
+        const rawText = rawList.join('；');
+
+        if (rawText.includes('对学习任务有兴趣') || rawText.includes('心流临界状态')) {
+          return '近期孩子并不是完全没有学习动力，内在仍有可以被带动的部分。当前更适合用较稳的节奏去承接，而不是过急推进。';
+        }
+        if (rawText.includes('学习过载状态') || rawText.includes('容易紧张') || rawText.includes('情绪低落')) {
+          return '近期孩子更像处在比较疲惫、比较绷紧的状态里。表面上可能还在坚持，但内在压力较大，容易影响学习效率和情绪稳定。现阶段更适合先减轻负担、稳住节奏。';
+        }
+        if (rawText.includes('学习涣散状态') && rawText.includes('焦虑')) {
+          return '近期孩子整体状态有些散，也带着明显的紧张和焦虑。现在更适合先帮助她把节奏稳下来，而不是单纯增加要求。';
+        }
+        if (rawText.includes('在意同伴与社会关系') || rawText.includes('难以获得安全或接纳')) {
+          return '近期孩子可能比较在意同伴关系和外界看法，这会影响她在学习中的稳定度和进入感。现阶段先帮助她建立安全感和被理解的感受，会更有利于后续学习推进。';
+        }
+        if (rawText.includes('过度期望型家长') || rawText.includes('无法控制焦虑')) {
+          return '近期孩子整体比较紧张，不太容易真正放松下来。这样的状态会影响她在学习上的专注和吸收，现阶段更适合先稳节奏、减轻压力。';
+        }
+        return '近期状态提示：当前不仅要看学习表现，也要结合情绪承受度和外部压力来判断。现阶段更适合先看状态，再决定推进方式。';
+      }
+
+      // 查询学生状态（同时刷新剩余次数）
+      async function queryStudentStatus() {
+        const studentName = document.getElementById('studentName').value.trim();
+        const birthDate = document.getElementById('birthDate').value;
+
+        if (!studentName || !birthDate) {
+          statusCard.classList.remove('hidden');
+          statusResult.textContent = '请先完整填写学生姓名和出生年月日，再查询近期状态。';
+          statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return null;
+        }
+
+        const student = findStudent(studentName, birthDate);
+        statusCard.classList.remove('hidden');
+
+        if (!student) {
+          boundStudent = null;
+          statusResult.textContent = '暂未查询到匹配的学生档案。请检查姓名和出生年月日是否正确。';
+          statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return null;
+        }
+
+        boundStudent = student;
+        const parentId = `${student.name}_${student.birth_date}`;
+        
+        // 绑定成功后立即从后端读取剩余次数
+        await fetchRemainingQuota(parentId, true);
+
+        const recentStatus = summarizeTimewaver(student.timewaver_raw);
+        statusResult.textContent = `【学生】${student.name}\n【最近更新】${student.updated_at}\n\n【近期状态】\n${recentStatus}`;
+        statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return student;
+      }
+
+      // 查询按钮事件
+      queryBtn.addEventListener('click', async () => {
+        queryBtn.textContent = '查询中...';
+        queryBtn.disabled = true;
+        try {
+          await queryStudentStatus();
+        } finally {
+          queryBtn.textContent = '查询近期状态';
+          queryBtn.disabled = false;
+        }
+      });
+
+      // 推演分析按钮事件
+      analyzeBtn.addEventListener('click', async () => {
+        // 1. 确保有绑定的学生
+        let student = boundStudent;
+        if (!student) {
+          student = await queryStudentStatus();
+        }
+        if (!student) {
+          renderPlainResult('请先成功绑定孩子档案并查询到近期状态，再继续查看推演分析。');
+          result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+
+        // 2. 确保剩余次数已知
+        const parentId = `${student.name}_${student.birth_date}`;
+        if (currentRemainingQuota === null) {
+          await fetchRemainingQuota(parentId, true);
+        }
+        
+        let remaining = currentRemainingQuota;
+        if (remaining === null || remaining === undefined || remaining <= 0) {
+          renderPlainResult('次数已用完，请查看弹窗中的开通方式。');
+          showPaymentCard();
+          updateModalUsageText();
+          return;
+        } else {
+          hidePaymentCard();
+        }
+
+        // 3. 获取表单内容
+        const issueType = document.getElementById('issueType').value;
+        const actionPlan = document.getElementById('actionPlan').value.trim();
+
+        if (!issueType || !actionPlan) {
+          renderPlainResult('请先选择问题类型，并填写家长拟采取的行动。');
+          result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+
+        const recentStatus = summarizeTimewaver(student.timewaver_raw);
+
+        // 4. 调用推演接口
+        analyzeBtn.textContent = '分析中...';
+        analyzeBtn.disabled = true;
+        renderPlainResult('正在调用AI进行分析，请稍候...');
+        result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        try {
+          const response = await fetch('https://api.gyparentng-ai.cn/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              studentName: student.name,
+              birthDate: student.birth_date,
+              issueType: issueType,
+              actionPlan: actionPlan,
+              recentStatus: recentStatus
+            })
+          });
+
+          const data = await response.json();
+
+          // 处理次数超限的特殊错误
+          if (data.error === 'free_limit_reached') {
+            renderPlainResult('次数已用完，请充值后继续使用');
+            showPaymentCard();
+            updateModalUsageText();
+            // 刷新剩余次数
+            await fetchRemainingQuota(parentId, true);
+            return;
+          }
+
+          if (data.text) {
+            result.innerHTML = formatResult(data.text);
+            // 更新剩余次数（后端返回的）
+            if (data.remainingQuota !== undefined && data.remainingQuota !== null) {
+              currentRemainingQuota = Number(data.remainingQuota);
+              updateRemainingQuotaDisplay(currentRemainingQuota);
+              updateModalUsageText();
+            } else {
+              // 如果没有返回，主动查询一次
+              await fetchRemainingQuota(parentId, true);
+            }
+            
+            // 检查更新后次数是否用完
+            if (currentRemainingQuota !== null && currentRemainingQuota <= 0) {
+              showPaymentCard();
+              updateModalUsageText();
+            }
+          } else if (data.error) {
+            renderPlainResult('AI分析失败：' + data.error);
+          } else {
+            renderPlainResult('未获取到分析结果，请稍后重试。');
+          }
+        } catch (error) {
+          console.error('AI请求失败：', error);
+          renderPlainResult('AI服务连接失败，请稍后重试。');
+        } finally {
+          analyzeBtn.textContent = '查看推演分析';
+          analyzeBtn.disabled = false;
+        }
+        result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      // 弹窗关闭事件
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+          hidePaymentCard();
+        });
+      }
+      const modalMask = document.querySelector('.modal-mask');
+      if (modalMask) {
+        modalMask.addEventListener('click', () => {
+          hidePaymentCard();
+        });
+      }
+
+      // 展开/收起
+      document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('expand-btn')) {
+          const content = e.target.previousElementSibling;
+          if (content) {
+            content.classList.remove('collapsed');
+            e.target.remove();
+          }
+        }
+      });
+
+      // 启动时加载学生数据库
+      loadStudentDatabase();
+    })();
   </script>
 </body>
 </html>
