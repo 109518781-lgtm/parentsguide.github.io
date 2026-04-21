@@ -875,6 +875,34 @@ ${recentStatus}`;
     loadStudentDatabase();
     updateUsageHint();
     updateModalUsageText();
+    
+    // 更新剩余次数显示
+function updateRemainingQuotaDisplay(quota) {
+  const hint = document.getElementById('usageHint');
+  if (!hint) return;
+  
+  if (quota === null || quota === undefined) {
+    // 如果没拿到，尝试从本地读取（兼容旧逻辑）
+    const remaining = getRemainingUsage();
+    if (remaining > 2) {
+      hint.textContent = `还可免费体验 ${remaining} 次`;
+    } else if (remaining > 0) {
+      hint.textContent = `仅剩 ${remaining} 次免费体验`;
+    } else {
+      hint.textContent = `免费体验已用完`;
+    }
+    return;
+  }
+  
+  if (quota > 2) {
+    hint.textContent = `剩余可用次数：${quota} 次`;
+  } else if (quota > 0) {
+    hint.textContent = `⚠️ 仅剩 ${quota} 次，请及时充值`;
+  } else {
+    hint.textContent = `❌ 次数已用完，请充值后使用`;
+  }
+}
+    
   </script>
 </body>
 </html>
