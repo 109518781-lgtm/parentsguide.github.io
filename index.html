@@ -804,7 +804,7 @@ ${recentStatus}`;
       result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
       try {
-        const response = await fetch(fetch('https://api.gyparentng-ai.cn/api/analyze', {
+        const response = await fetch('https://api.gyparentng-ai.cn/api/analyze', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
