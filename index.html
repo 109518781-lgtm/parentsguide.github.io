@@ -804,7 +804,7 @@ ${recentStatus}`;
       result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
       try {
-        const response = await fetch('http://parentsguide-api.109518781.workers.dev/analyze', {
+        const response = await fetch('http://parentsguide-api.109518781.workers.dev/api/analyze', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
