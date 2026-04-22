@@ -14,39 +14,47 @@ jobs:
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+        with:
+          fetch-depth: 0
 
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: 安装依赖
         run: npm install axios
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: 同步飞书表格数据
         run: node .github/scripts/sync-students.cjs
         env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
           FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
           FEISHU_APP_TOKEN: ${{ secrets.FEISHU_APP_TOKEN }}
           FEISHU_TABLE_ID: ${{ secrets.FEISHU_TABLE_ID }}
 
-      - name: 恢复 package 文件（避免不必要的提交）
+      - name: 检查文件是否生成
         run: |
-          git checkout -- package.json package-lock.json 2>/dev/null || true
-          rm -rf node_modules 2>/dev/null || true
+          ls -la students.json || echo "文件不存在"
+          cat students.json | head -20 || echo "无法读取文件"
 
       - name: 提交更改
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add students.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "chore: 自动同步飞书学生数据库 [skip ci]"
-          git push
+          
+          # 强制添加文件（即使 .gitignore 忽略了）
+          git add -f students.json
+          
+          # 检查是否有更改
+          if git diff --cached --quiet; then
+            echo "没有检测到文件更改，但强制更新时间戳"
+            touch students.json
+            git add -f students.json
+          fi
+          
+          # 提交（允许空提交）
+          git commit -m "chore: 自动同步飞书学生数据库 [skip ci]" || echo "无需提交"
+          
+          # 强制推送
+          git push --force-with-lease
