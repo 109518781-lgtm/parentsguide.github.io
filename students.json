@@ -1,70 +1,79 @@
 [
   {
-    "student_id": "S001",
-    "name": "汤梓峰",
-    "birth_date": "2011-11-16",
-    "updated_at": "2026-04-18",
-    "timewaver_raw": [
-      "社交障碍",
-      "刻板行为",
-      "兴趣狭窄",
-      "感觉异常",
-      "反复出现强迫思维",
-      "关系倒错，被要求承担超出年龄的责任",
-      "心流临界状态",
-      "对学习任务有兴趣"
-    ]
-  },
-  {
-    "student_id": "S002",
+    "studentId": "A00001",
     "name": "周慧霖",
-    "birth_date": "2011-10-05",
-    "updated_at": "2026-04-18",
-    "timewaver_raw": [
-      "物质及行为成瘾——失控、撒谎、借钱",
-      "焦虑及恐惧障碍-社交焦虑",
-      "害怕他人评价，可能影响生活和学习",
-      "学习涣散状态"
-    ]
+    "birthDate": 1317744000000,
+    "parentGoal": "慧霖不再心思纷乱，影响学习。",
+    "currentDifficulty": "慧霖觉得现在和外婆舅舅们一起的生活不如意，想选择跟爸爸一起生活，觉得妈妈控制欲太强，如果跟爸爸生活，还能让妈妈更轻松，自己又有更多自由。",
+    "timewaverRaw": "物质及行为成瘾——失控、撒谎、借钱；焦虑及恐惧障碍-社交焦虑，害怕他人评价，可能影响生活和学习；学习涣散状态",
+    "talentPotential": "",
+    "currentStudyStatus": "",
+    "updatedAt": 1773417600000
   },
   {
-    "student_id": "S003",
+    "studentId": "A00002",
     "name": "张译心",
-    "birth_date": "2015-05-13",
-    "updated_at": "2026-04-18",
-    "timewaver_raw": [
-      "嗜睡",
-      "学习过载状态",
-      "学习时用力过度，容易紧张",
-      "担心成绩或后果",
-      "明明在学习，却效率不高",
-      "容易烦躁，急于完成任务",
-      "情绪低落，对日常活动缺乏兴趣",
-      "想逃离现在的生活"
-    ]
+    "birthDate": 1431446400000,
+    "parentGoal": "考取名校小升初重点班",
+    "currentDifficulty": "能力尚可，但心理承载力不足 + 自我价值高度依赖外界评价，不敢面对困难，只想完成基本任务",
+    "timewaverRaw": "嗜睡；学习过载状态，学习时用力过度，容易紧张，担心成绩或后果，明明在学习，却效率不高，容易烦躁，急于完成任务；情绪低落，对日常活动缺乏兴趣；想逃离现在的生活",
+    "talentPotential": "",
+    "currentStudyStatus": "",
+    "updatedAt": 1775232000000
   },
   {
-    "student_id": "S004",
+    "studentId": "A00003",
     "name": "刘晓桐",
-    "birth_date": "2012-09-26",
-    "updated_at": "2026-04-18",
-    "timewaver_raw": [
-      "在意同伴与社会关系",
-      "难以获得安全或接纳",
-      "通过迎合、回避或对抗来保护自己",
-      "学习涣散状态"
-    ]
+    "birthDate": 1348588800000,
+    "parentGoal": "不要学坏，有学习意愿",
+    "currentDifficulty": "容易和坏孩子混迹在一起，曾经吸烟、偷偷买手机等",
+    "timewaverRaw": "在意同伴与社会关系，难以获得安全或接纳，通过迎合、回避或对抗来保护自己；学习涣散状态。",
+    "talentPotential": "",
+    "currentStudyStatus": "",
+    "updatedAt": 1776441600000
   },
   {
-    "student_id": "S005",
+    "studentId": "A00004",
     "name": "冼心莹",
-    "birth_date": "2014-02-25",
-    "updated_at": "2026-04-18",
-    "timewaver_raw": [
-      "无法控制焦虑",
-      "情绪紧张",
-      "学习涣散状态",
-      "过度期望型家长"
-    ]
+    "birthDate": 1393257600000,
+    "parentGoal": "考取名校小升初重点班",
+    "currentDifficulty": "学习不扎实，与妈妈的目标或意见相左，早熟但对妈妈封闭内心",
+    "timewaverRaw": "无法控制焦虑，情绪紧张；学习涣散状态；过度期望型家长",
+    "talentPotential": "",
+    "currentStudyStatus": "",
+    "updatedAt": 1776441600000
+  },
+  {
+    "studentId": "A00005",
+    "name": "高瑄沂",
+    "birthDate": 1525190400000,
+    "parentGoal": "改善注意力，高效学习，记忆力增强",
+    "currentDifficulty": "隔代养育，不听爷爷奶奶话；注意力涣散，学习低效",
+    "timewaverRaw": "社交焦虑；广泛性焦虑；理性分析型家长；注意力不集中，难以维持长时间专注；冲动行为和情绪控制差；社交障碍和自我表达困难",
+    "talentPotential": "",
+    "currentStudyStatus": "",
+    "updatedAt": 1776441600000
+  },
+  {
+    "studentId": "A00006",
+    "name": "汤梓峰",
+    "birthDate": 1321372800000,
+    "parentGoal": "情绪稳定，成绩稳步上升",
+    "currentDifficulty": "玩手机时间长，好像难以控制自己",
+    "timewaverRaw": "社交障碍、刻板行为、兴趣狭窄、感觉异常；反复出现强迫思维；关系倒错，被要求承担超出年龄的责任；心流临界状态，对学习任务有兴趣",
+    "talentPotential": "",
+    "currentStudyStatus": "",
+    "updatedAt": 1775836800000
+  },
+  {
+    "studentId": "A00007",
+    "name": "陈奕贤",
+    "birthDate": 1352908800000,
+    "parentGoal": "保持年级前十，确保奖学金",
+    "currentDifficulty": "状态松懈",
+    "timewaverRaw": "自我怀疑型家长；可能存在早期或长期的创伤；压力时可能诱发情感平淡、意志减退表现；心流临界状态，对学习任务有兴趣",
+    "talentPotential": "",
+    "currentStudyStatus": "",
+    "updatedAt": 1776441600000
   }
 ]
