@@ -2,13 +2,11 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-// 从环境变量读取配置
 const APP_ID = process.env.FEISHU_APP_ID;
 const APP_SECRET = process.env.FEISHU_APP_SECRET;
 const APP_TOKEN = process.env.FEISHU_APP_TOKEN;
 const TABLE_ID = process.env.FEISHU_TABLE_ID;
 
-// 获取飞书 tenant_access_token
 async function getTenantAccessToken() {
   const response = await axios.post('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal', {
     app_id: APP_ID,
@@ -21,19 +19,14 @@ async function getTenantAccessToken() {
   return response.data.tenant_access_token;
 }
 
-// 读取飞书表格的所有记录
 async function getTableRecords(accessToken) {
   let allRecords = [];
   let pageToken = null;
   let hasMore = true;
 
   while (hasMore) {
-    const params = {
-      page_size: 100,
-    };
-    if (pageToken) {
-      params.page_token = pageToken;
-    }
+    const params = { page_size: 100 };
+    if (pageToken) params.page_token = pageToken;
 
     const response = await axios.get(
       `https://open.feishu.cn/open-apis/bitable/v1/apps/${APP_TOKEN}/tables/${TABLE_ID}/records`,
@@ -59,29 +52,65 @@ async function getTableRecords(accessToken) {
   return allRecords;
 }
 
-// 将飞书记录转换为 students.json 格式
+// 将飞书日期（时间戳或字符串）转换为 YYYY-MM-DD 格式
+function formatDate(value) {
+  if (!value) return '';
+  
+  // 如果是数字时间戳（毫秒）
+  if (typeof value === 'number') {
+    const date = new Date(value);
+    // 检查日期是否有效
+    if (isNaN(date.getTime())) return '';
+    return date.toISOString().split('T')[0];
+  }
+  
+  // 如果已经是 YYYY-MM-DD 字符串格式
+  if (typeof value === 'string' && value.match(/^\d{4}-\d{2}-\d{2}/)) {
+    return value;
+  }
+  
+  // 尝试解析其他字符串格式
+  if (typeof value === 'string') {
+    const date = new Date(value);
+    if (!isNaN(date.getTime())) {
+      return date.toISOString().split('T')[0];
+    }
+  }
+  
+  return '';
+}
+
 function convertToStudentsJson(records) {
   const students = records.map(record => {
     const fields = record.fields;
     
-    // 处理 TimeWaver 原始标签（可能是字符串，也可能是数组）
+    // 处理 TimeWaver 原始标签
     let timewaverRaw = fields['TimeWaver分析摘要'] || '';
     if (Array.isArray(timewaverRaw)) {
       timewaverRaw = timewaverRaw.join('；');
     }
     
-    return {
+    const student = {
       studentId: fields['学员ID'] || '',
       name: fields['学员姓名'] || '',
-      birthDate: fields['出生日期'] || '',
+      birthDate: formatDate(fields['出生日期']),
       parentGoal: fields['家长当前目标'] || '',
       currentDifficulty: fields['当前困难'] || '',
       timewaverRaw: timewaverRaw,
       talentPotential: fields['天赋潜能'] || '',
       currentStudyStatus: fields['当前学习情况'] || '',
-      updatedAt: fields['更新日期'] || new Date().toISOString().split('T')[0]
+      updatedAt: formatDate(fields['更新日期']) || new Date().toISOString().split('T')[0]
     };
-  }).filter(student => student.name && student.birthDate); // 过滤无效记录
+    
+    return student;
+  }).filter(student => {
+    // 过滤无效记录：必须有名和出生日期
+    if (!student.name || !student.birthDate) {
+      console.log(`⚠️ 跳过无效记录: 姓名="${student.name}", 出生日期="${student.birthDate}"`);
+      return false;
+    }
+    return true;
+  });
   
   return students;
 }
