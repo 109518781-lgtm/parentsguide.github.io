@@ -52,14 +52,17 @@ async function getTableRecords(accessToken) {
   return allRecords;
 }
 
-// 将飞书日期（时间戳）转换为 YYYY-MM-DD 格式（使用 UTC，避免时区偏移）
+// 将飞书日期（时间戳）转换为 YYYY-MM-DD 格式
+// 飞书 API 返回的时间戳是 UTC 0 时区，需要加上 8 小时（北京时间）的偏移
 function formatDate(value) {
   if (!value) return '';
   
+  // 北京时间偏移量：8小时 = 28800000 毫秒
+  const BEIJING_OFFSET = 8 * 60 * 60 * 1000;
+  
   // 如果是数字时间戳（毫秒）
   if (typeof value === 'number') {
-    // 使用 UTC 方式转换，避免时区偏移
-    const date = new Date(value);
+    const date = new Date(value + BEIJING_OFFSET);
     const year = date.getUTCFullYear();
     const month = String(date.getUTCMonth() + 1).padStart(2, '0');
     const day = String(date.getUTCDate()).padStart(2, '0');
@@ -75,9 +78,10 @@ function formatDate(value) {
   if (typeof value === 'string') {
     const date = new Date(value);
     if (!isNaN(date.getTime())) {
-      const year = date.getUTCFullYear();
-      const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-      const day = String(date.getUTCDate()).padStart(2, '0');
+      const adjustedDate = new Date(date.getTime() + BEIJING_OFFSET);
+      const year = adjustedDate.getUTCFullYear();
+      const month = String(adjustedDate.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(adjustedDate.getUTCDate()).padStart(2, '0');
       return `${year}-${month}-${day}`;
     }
   }
