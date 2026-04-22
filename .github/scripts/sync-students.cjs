@@ -52,16 +52,18 @@ async function getTableRecords(accessToken) {
   return allRecords;
 }
 
-// 将飞书日期（时间戳或字符串）转换为 YYYY-MM-DD 格式
+// 将飞书日期（时间戳）转换为 YYYY-MM-DD 格式（使用 UTC，避免时区偏移）
 function formatDate(value) {
   if (!value) return '';
   
   // 如果是数字时间戳（毫秒）
   if (typeof value === 'number') {
+    // 使用 UTC 方式转换，避免时区偏移
     const date = new Date(value);
-    // 检查日期是否有效
-    if (isNaN(date.getTime())) return '';
-    return date.toISOString().split('T')[0];
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
   
   // 如果已经是 YYYY-MM-DD 字符串格式
@@ -73,7 +75,10 @@ function formatDate(value) {
   if (typeof value === 'string') {
     const date = new Date(value);
     if (!isNaN(date.getTime())) {
-      return date.toISOString().split('T')[0];
+      const year = date.getUTCFullYear();
+      const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(date.getUTCDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
     }
   }
   
@@ -104,7 +109,7 @@ function convertToStudentsJson(records) {
     
     return student;
   }).filter(student => {
-    // 过滤无效记录：必须有名和出生日期
+    // 过滤无效记录：必须有姓名和出生日期
     if (!student.name || !student.birthDate) {
       console.log(`⚠️ 跳过无效记录: 姓名="${student.name}", 出生日期="${student.birthDate}"`);
       return false;
@@ -127,6 +132,11 @@ async function main() {
     console.log('3. 转换数据格式...');
     const students = convertToStudentsJson(records);
     console.log(`   生成 ${students.length} 条学生档案`);
+    
+    // 打印第一条记录作为验证
+    if (students.length > 0) {
+      console.log('   第一条记录示例:', JSON.stringify(students[0], null, 2));
+    }
     
     console.log('4. 写入 students.json 文件...');
     const outputPath = path.join(process.cwd(), 'students.json');
