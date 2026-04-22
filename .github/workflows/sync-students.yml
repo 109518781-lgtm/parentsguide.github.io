@@ -26,7 +26,7 @@ jobs:
         run: npm install axios
 
       - name: 同步飞书表格数据
-        run: node .github/scripts/sync-students.js
+        run: node .github/scripts/sync-students.cjs
         env:
           FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
