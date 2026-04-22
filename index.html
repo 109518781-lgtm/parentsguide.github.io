@@ -335,41 +335,35 @@
 
       // 生成状态摘要（优先使用新字段）
       function buildRecentStatusSummary(student) {
-        if (student.isTemporary) return '';
-        
-        // 如果有 TimeWaver 原始标签，优先使用
-        if (student.timewaverRaw && student.timewaverRaw.length > 0) {
-          const rawText = Array.isArray(student.timewaverRaw) 
-            ? student.timewaverRaw.join('；') 
-            : student.timewaverRaw;
-          
-          if (rawText.includes('对学习任务有兴趣') || rawText.includes('心流临界状态')) {
-            return '近期孩子并不是完全没有学习动力，内在仍有可以被带动的部分。当前更适合用较稳的节奏去承接，而不是过急推进。';
-          }
-          if (rawText.includes('学习过载状态') || rawText.includes('容易紧张') || rawText.includes('情绪低落')) {
-            return '近期孩子更像处在比较疲惫、比较绷紧的状态里。表面上可能还在坚持，但内在压力较大，容易影响学习效率和情绪稳定。现阶段更适合先减轻负担、稳住节奏。';
-          }
-          if (rawText.includes('学习涣散状态') && rawText.includes('焦虑')) {
-            return '近期孩子整体状态有些散，也带着明显的紧张和焦虑。现在更适合先帮助她把节奏稳下来，而不是单纯增加要求。';
-          }
-          if (rawText.includes('在意同伴与社会关系') || rawText.includes('难以获得安全或接纳')) {
-            return '近期孩子可能比较在意同伴关系和外界看法，这会影响她在学习中的稳定度和进入感。现阶段先帮助她建立安全感和被理解的感受，会更有利于后续学习推进。';
-          }
-          if (rawText.includes('过度期望型家长') || rawText.includes('无法控制焦虑')) {
-            return '近期孩子整体比较紧张，不太容易真正放松下来。这样的状态会影响她在学习上的专注和吸收，现阶段更适合先稳节奏、减轻压力。';
-          }
-          return rawText;
-        }
-        
-        // 如果没有 TimeWaver 标签，用其他字段组合
-        let summary = '';
-        if (student.currentStudyStatus) summary += `学习情况：${student.currentStudyStatus}；`;
-        if (student.currentDifficulty) summary += `当前困难：${student.currentDifficulty}；`;
-        if (student.talentPotential) summary += `潜能线索：${student.talentPotential}；`;
-        if (student.parentGoal) summary += `家长目标：${student.parentGoal}；`;
-        
-        return summary || '当前已有学生档案，可继续进行推演分析。';
-      }
+  if (student.isTemporary) return '';
+  
+  // 如果有 TimeWaver 原始标签，生成转译描述
+  if (student.timewaverRaw && student.timewaverRaw.length > 0) {
+    const rawText = Array.isArray(student.timewaverRaw) 
+      ? student.timewaverRaw.join('；') 
+      : student.timewaverRaw;
+    
+    if (rawText.includes('对学习任务有兴趣') || rawText.includes('心流临界状态')) {
+      return '近期孩子并不是完全没有学习动力，内在仍有可以被带动的部分。当前更适合用较稳的节奏去承接，而不是过急推进。';
+    }
+    if (rawText.includes('学习过载状态') || rawText.includes('容易紧张') || rawText.includes('情绪低落')) {
+      return '近期孩子更像处在比较疲惫、比较绷紧的状态里。表面上可能还在坚持，但内在压力较大，容易影响学习效率和情绪稳定。现阶段更适合先减轻负担、稳住节奏。';
+    }
+    if (rawText.includes('学习涣散状态') && rawText.includes('焦虑')) {
+      return '近期孩子整体状态有些散，也带着明显的紧张和焦虑。现在更适合先帮助她把节奏稳下来，而不是单纯增加要求。';
+    }
+    if (rawText.includes('在意同伴与社会关系') || rawText.includes('难以获得安全或接纳')) {
+      return '近期孩子可能比较在意同伴关系和外界看法，这会影响她在学习中的稳定度和进入感。现阶段先帮助她建立安全感和被理解的感受，会更有利于后续学习推进。';
+    }
+    if (rawText.includes('过度期望型家长') || rawText.includes('无法控制焦虑')) {
+      return '近期孩子整体比较紧张，不太容易真正放松下来。这样的状态会影响她在学习上的专注和吸收，现阶段更适合先稳节奏、减轻压力。';
+    }
+    return rawText;
+  }
+  
+  // 如果没有 TimeWaver 标签，返回通用提示
+  return '当前已有学生档案，可继续进行推演分析。';
+}
 
       async function createTemporaryProfile(studentName, birthDate) {
         const response = await fetch(`${API_BASE}/api/create-temporary-profile`, {
@@ -384,102 +378,91 @@
         return response.json();
       }
 
-      async function queryStudentStatus() {
-        const studentName = document.getElementById('studentName').value.trim();
-        const birthDate = document.getElementById('birthDate').value;
+    async function queryStudentStatus() {
+  const studentName = document.getElementById('studentName').value.trim();
+  const birthDate = document.getElementById('birthDate').value;
 
-        if (!studentName || !birthDate) {
-          statusCard.classList.remove('hidden');
-          statusResult.textContent = '请先完整填写学生姓名和出生年月日，再查询近期状态。';
-          temporaryNoticeBox.classList.add('hidden');
-          statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          return null;
-        }
+  if (!studentName || !birthDate) {
+    statusCard.classList.remove('hidden');
+    statusResult.textContent = '请先完整填写学生姓名和出生年月日，再查询近期状态。';
+    temporaryNoticeBox.classList.add('hidden');
+    statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return null;
+  }
 
-        const student = findStudent(studentName, birthDate);
-        statusCard.classList.remove('hidden');
+  const student = findStudent(studentName, birthDate);
+  statusCard.classList.remove('hidden');
 
-        if (!student) {
-          // 自动创建临时档案
-          try {
-            const tempResult = await createTemporaryProfile(studentName, birthDate);
+  if (!student) {
+    // 自动创建临时档案
+    try {
+      const tempResult = await createTemporaryProfile(studentName, birthDate);
 
-            boundStudent = {
-              name: studentName,
-              birthDate: birthDate,
-              studentId: '',
-              parentGoal: '',
-              currentDifficulty: '',
-              timewaverRaw: [],
-              talentPotential: '',
-              currentStudyStatus: '',
-              updatedAt: '临时档案',
-              isTemporary: true
-            };
+      boundStudent = {
+        name: studentName,
+        birthDate: birthDate,
+        studentId: '',
+        parentGoal: '',
+        currentDifficulty: '',
+        timewaverRaw: [],
+        talentPotential: '',
+        currentStudyStatus: '',
+        updatedAt: '临时档案',
+        isTemporary: true
+      };
 
-            await fetchRemainingQuota(true);
+      await fetchRemainingQuota(true);
 
-            statusResult.textContent = `【学生】${studentName}
+      statusResult.textContent = `【学生】${studentName}
 【最近更新】临时档案
 
 【近期状态】
 当前暂无专业状态档案，仅支持基础推演分析。`;
 
-            temporaryNoticeBox.textContent = '请联系赢未来国雅，建立学生档案，获取专业分析的状态结果。';
-            temporaryNoticeBox.classList.remove('hidden');
+      temporaryNoticeBox.textContent = '请联系赢未来国雅，建立学生档案，获取专业分析的状态结果。';
+      temporaryNoticeBox.classList.remove('hidden');
 
-            statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            return boundStudent;
-          } catch (error) {
-            console.error('创建临时档案失败：', error);
-            boundStudent = null;
-            statusResult.textContent = '暂未查询到匹配的学生档案，且临时档案创建失败，请稍后重试。';
-            temporaryNoticeBox.classList.add('hidden');
-            statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            return null;
-          }
-        }
+      statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return boundStudent;
+    } catch (error) {
+      console.error('创建临时档案失败：', error);
+      boundStudent = null;
+      statusResult.textContent = '暂未查询到匹配的学生档案，且临时档案创建失败，请稍后重试。';
+      temporaryNoticeBox.classList.add('hidden');
+      statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return null;
+    }
+  }
 
-        // 正式学生：构建完整档案对象
-        boundStudent = {
-          studentId: student.studentId || '',
-          name: student.name,
-          birthDate: student.birthDate,
-          parentGoal: student.parentGoal || '',
-          currentDifficulty: student.currentDifficulty || '',
-          timewaverRaw: student.timewaverRaw || [],
-          talentPotential: student.talentPotential || '',
-          currentStudyStatus: student.currentStudyStatus || '',
-          updatedAt: student.updatedAt || new Date().toISOString().split('T')[0],
-          isTemporary: false
-        };
+  // 正式学生：构建完整档案对象
+  boundStudent = {
+    studentId: student.studentId || '',
+    name: student.name,
+    birthDate: student.birthDate,
+    parentGoal: student.parentGoal || '',
+    currentDifficulty: student.currentDifficulty || '',
+    timewaverRaw: student.timewaverRaw || [],
+    talentPotential: student.talentPotential || '',
+    currentStudyStatus: student.currentStudyStatus || '',
+    updatedAt: student.updatedAt || new Date().toISOString().split('T')[0],
+    isTemporary: false
+  };
 
-        await fetchRemainingQuota(true);
+  await fetchRemainingQuota(true);
 
-        const recentStatus = buildRecentStatusSummary(boundStudent);
-        
-        // 构建状态显示文本
-        let statusText = `【学生】${boundStudent.name}\n【最近更新】${boundStudent.updatedAt}\n\n【近期状态】\n${recentStatus || '当前已有学生档案，可继续进行推演分析。'}`;
-        
-        // 如果有额外字段，也显示出来
-        if (boundStudent.parentGoal) {
-          statusText += `\n\n【家长当前目标】\n${boundStudent.parentGoal}`;
-        }
-        if (boundStudent.currentDifficulty) {
-          statusText += `\n\n【当前困难】\n${boundStudent.currentDifficulty}`;
-        }
-        if (boundStudent.talentPotential) {
-          statusText += `\n\n【天赋潜能参考】\n${boundStudent.talentPotential}`;
-        }
-        if (boundStudent.currentStudyStatus) {
-          statusText += `\n\n【当前学习情况】\n${boundStudent.currentStudyStatus}`;
-        }
-        
-        statusResult.textContent = statusText;
-        temporaryNoticeBox.classList.add('hidden');
-        statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return boundStudent;
-      }
+  // 只显示转译后的状态描述（给家长看的）
+  const recentStatus = buildRecentStatusSummary(boundStudent);
+  
+  statusResult.textContent = `【学生】${boundStudent.name}
+【最近更新】${boundStudent.updatedAt}
+
+【近期状态】
+${recentStatus || '当前已有学生档案，可继续进行推演分析。'}`;
+
+  temporaryNoticeBox.classList.add('hidden');
+  statusCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  return boundStudent;
+}
 
       queryBtn.addEventListener('click', async () => {
         queryBtn.textContent = '查询中...';
