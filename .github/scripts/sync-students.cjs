@@ -142,6 +142,11 @@ async function main() {
     const outputPath = path.join(process.cwd(), 'students.json');
     fs.writeFileSync(outputPath, JSON.stringify(students, null, 2), 'utf-8');
     
+    // 验证文件已写入
+    const stats = fs.statSync(outputPath);
+    console.log(`   文件大小: ${stats.size} 字节`);
+    console.log(`   文件路径: ${outputPath}`);
+    
     console.log('✅ 同步完成！');
   } catch (error) {
     console.error('❌ 同步失败:', error.message);
