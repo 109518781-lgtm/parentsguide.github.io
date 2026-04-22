@@ -1,0 +1,42 @@
+name: 同步飞书学生数据库
+
+on:
+  # 手动触发（推荐）
+  workflow_dispatch:
+  # 每天凌晨2点自动同步
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 安装依赖
+        run: npm install axios
+
+      - name: 同步飞书表格数据
+        run: node .github/scripts/sync-students.js
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+          FEISHU_APP_TOKEN: ${{ secrets.FEISHU_APP_TOKEN }}
+          FEISHU_TABLE_ID: ${{ secrets.FEISHU_TABLE_ID }}
+
+      - name: 提交更改
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add students.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: 自动同步飞书学生数据库 [skip ci]"
+          git push
