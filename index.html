@@ -497,6 +497,56 @@
       loadOptionalDatabases();
       fetchRemainingQuota();
     })();
+
+    <!-- 修改学生信息录入部分 -->
+<div class="card" id="createStudentCard">
+  <h2>第一步：填写学生信息</h2>
+  <label class="label" for="studentName">学生姓名</label>
+  <input id="studentName" type="text" placeholder="请输入学生姓名" />
+
+  <label class="label" for="birthDate">出生年月日</label>
+  <input id="birthDate" type="date" />
+
+  <div class="btn-row">
+    <button id="createStudentBtn" class="secondary">创建学生档案</button>
+  </div>
+
+  <div class="muted center-text">首次使用，填写学生信息并创建档案后可进行初步推演分析。</div>
+</div>
+
+<!-- 修改提示信息的部分 -->
+<div class="card hidden" id="statusCard">
+  <h2>孩子近期状态</h2>
+  <div id="statusResult" class="status-box">这里会显示近期状态。请联系赢未来国雅，建立学生档案，获取专业分析的状态结果。</div>
+</div>
+
+<!-- 修改查询按钮事件 -->
+<script>
+  // 创建临时档案并执行推演分析
+  document.getElementById('createStudentBtn').addEventListener('click', async function() {
+    const studentName = document.getElementById('studentName').value.trim();
+    const birthDate = document.getElementById('birthDate').value;
+
+    if (!studentName || !birthDate) {
+      alert("请填写学生姓名和出生日期");
+      return;
+    }
+
+    // 创建临时档案
+    const response = await fetch('/api/create-temporary-profile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ studentName, birthDate })
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      alert('学生档案已创建为临时档案，开始推演分析。');
+      // 执行简单推演分析，继续后续操作
+    } else {
+      alert('创建临时档案失败，请稍后重试');
+    }
+  });
   </script>
 </body>
 </html>
