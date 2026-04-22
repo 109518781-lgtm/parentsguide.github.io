@@ -1,9 +1,7 @@
 name: 同步飞书学生数据库
 
 on:
-  # 手动触发（推荐）
   workflow_dispatch:
-  # 每天凌晨2点自动同步
   schedule:
     - cron: '0 2 * * *'
 
@@ -16,22 +14,34 @@ jobs:
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: 安装依赖
         run: npm install axios
+        env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
       - name: 同步飞书表格数据
         run: node .github/scripts/sync-students.cjs
         env:
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
           FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
           FEISHU_APP_TOKEN: ${{ secrets.FEISHU_APP_TOKEN }}
           FEISHU_TABLE_ID: ${{ secrets.FEISHU_TABLE_ID }}
+
+      - name: 恢复 package 文件（避免不必要的提交）
+        run: |
+          git checkout -- package.json package-lock.json 2>/dev/null || true
+          rm -rf node_modules 2>/dev/null || true
 
       - name: 提交更改
         run: |
