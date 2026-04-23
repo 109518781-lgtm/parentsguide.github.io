@@ -8,7 +8,7 @@
     "timewaverRaw": "物质及行为成瘾——失控、撒谎、借钱；焦虑及恐惧障碍-社交焦虑，害怕他人评价，可能影响生活和学习；学习涣散状态",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-03-14"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00002",
@@ -19,7 +19,7 @@
     "timewaverRaw": "嗜睡；学习过载状态，学习时用力过度，容易紧张，担心成绩或后果，明明在学习，却效率不高，容易烦躁，急于完成任务；情绪低落，对日常活动缺乏兴趣；想逃离现在的生活",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-04"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00003",
@@ -30,7 +30,7 @@
     "timewaverRaw": "在意同伴与社会关系，难以获得安全或接纳，通过迎合、回避或对抗来保护自己；学习涣散状态。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-18"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00004",
@@ -41,7 +41,7 @@
     "timewaverRaw": "无法控制焦虑，情绪紧张；学习涣散状态；过度期望型家长",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-18"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00005",
@@ -52,7 +52,7 @@
     "timewaverRaw": "社交焦虑；广泛性焦虑；理性分析型家长；注意力不集中，难以维持长时间专注；冲动行为和情绪控制差；社交障碍和自我表达困难",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-18"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00006",
@@ -63,7 +63,7 @@
     "timewaverRaw": "社交障碍、刻板行为、兴趣狭窄、感觉异常；反复出现强迫思维；关系倒错，被要求承担超出年龄的责任；心流临界状态，对学习任务有兴趣",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-11"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00007",
@@ -74,7 +74,7 @@
     "timewaverRaw": "家长执念：不能输给别人。自我怀疑型家长；可能存在早期或长期的创伤；压力时可能诱发情感平淡、意志减退表现；心流临界状态，对学习任务有兴趣",
     "talentPotential": "",
     "currentStudyStatus": "学习过载，容易紧张，总是担心成绩。",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00008",
@@ -85,183 +85,183 @@
     "timewaverRaw": "嗜睡；错误信念与心理障碍；限制性信念家长；创伤与应激障碍；心流临界状态，对学习任务有兴趣。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-04"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00009",
     "name": "杜心悦",
     "birthDate": "2009-10-31",
-    "parentGoal": "",
+    "parentGoal": "保持好成绩。",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：已开始投入学习，时间感减弱，对学习任务有兴趣。存在躯体症状及相关障碍。情绪不稳定，回避家庭互动，长时间沉迷手机。在人生中感到漂泊、游移，无法扎根。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00010",
     "name": "江楚天",
     "birthDate": "2016-03-17",
-    "parentGoal": "",
+    "parentGoal": "改掉马虎浮躁的行为，考取高分。",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：行为马虎浮躁，文化课基础不扎实。亲子边界僵硬，家长情绪负面。孩子有能力但拒绝尝试。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00011",
     "name": "戴俊泓",
     "birthDate": "2009-11-05",
-    "parentGoal": "",
+    "parentGoal": "高中选科都能取得好成绩，与同学相处良好。",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：学习涣散，对很多人感到不满。存在强迫及相关障碍。希望跟上学校进度并与同学良好相处。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00012",
     "name": "莫家佑",
     "birthDate": "2009-01-09",
-    "parentGoal": "",
+    "parentGoal": "学会控制情绪，能坚持上学，保持成绩优势",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：学习涣散，存在情绪与心境障碍。有休学经历，需学会控制情绪，坚持上学，保持成绩优势。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00013",
     "name": "欧阳志涛",
     "birthDate": "2009-10-02",
-    "parentGoal": "",
+    "parentGoal": "激发内在动力，恢复正常上学",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：存在强迫及相关障碍，挫败耐受力崩塌。对任何事情都没有兴趣，沉迷手机、视频或短剧。需激发内在动力，恢复正常上学。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00014",
     "name": "刘智瑄",
     "birthDate": "2012-12-19",
-    "parentGoal": "",
+    "parentGoal": "多动症状逐步减弱，学习意愿提升",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：多动症状逐渐减弱，学习意愿有所提升。对学习任务有兴趣，时间感减弱。对手机、视频、短剧沉浸，其他兴趣缺乏。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00015",
     "name": "伍乐儿",
     "birthDate": "2013-02-07",
-    "parentGoal": "",
+    "parentGoal": "减少不良行为，提升学习意。",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：对很多人感到不满。兴趣多变，缺乏持久专注。存在不良行为，需提升学习意愿。亲子关系倒错，孩子心理位置与父母平齐或更高。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00016",
     "name": "袁海鑫",
     "birthDate": "2016-06-15",
-    "parentGoal": "",
+    "parentGoal": "减少不良行为，提升专注力",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：情绪波动大，易怒，缺乏情感表达与连接。对任何事情都没有兴趣，沉迷手机、视频或短剧。需减少不良行为，提升专注力。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00017",
     "name": "利籽月",
     "birthDate": "2015-06-12",
-    "parentGoal": "",
+    "parentGoal": "提升成绩，小升初考入江门二中精英班",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：容易走神、分心，学习时常想玩手机，推进缓慢。兴趣多变，缺乏持久专注。需提升成绩以备考小升初。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00018",
     "name": "刘晓桐",
     "birthDate": "2012-09-26",
-    "parentGoal": "",
+    "parentGoal": "提升成绩，能听懂学校课程，跟上学校学习进度",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：在特定兴趣上表现突出，但缺乏未来规划。存在羞耻阴影冻结。需提升成绩，跟上学校课程进度。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00019",
     "name": "刘镁渲",
     "birthDate": "2015-08-18",
-    "parentGoal": "",
+    "parentGoal": "提升数学成绩，找到天赋爱好。",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：已开始投入学习，时间感减弱，对学习任务有兴趣。存在断裂型兴趣与强迫及相关障碍。在人生中感到漂泊，无法扎根。需提升数学成绩，找到天赋爱好。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00020",
     "name": "刘泽霖",
     "birthDate": "2018-05-23",
-    "parentGoal": "",
+    "parentGoal": "打好英语和奥数基础，为小升初考入优质私立初中做准备。",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：情绪不稳定，回避家庭互动，长时间沉迷手机。被期待成为“小大人”或家庭支柱。需打好英语与奥数基础，为小升初做准备。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00021",
     "name": "雷予泽",
     "birthDate": "2008-05-26",
-    "parentGoal": "",
+    "parentGoal": "今年高考顺利",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：有广泛性焦虑障碍。对任何事情都没有兴趣，沉迷手机、视频或短剧。需专心高效学习备战高考。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00022",
     "name": "付俊贤",
     "birthDate": "2011-02-23",
-    "parentGoal": "",
+    "parentGoal": "全力以赴备战今年中考。",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：已开始投入学习，时间感减弱，对学习任务有兴趣。存在抑郁障碍。在特定兴趣上表现突出，但缺乏未来规划。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00023",
     "name": "梁以荞",
     "birthDate": "2015-05-11",
-    "parentGoal": "",
+    "parentGoal": "改善负面情绪。",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：关系倒错，孩子承受来自多方的过高期待，情绪与心境障碍：抑郁障碍",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00024",
     "name": "区瀚文",
     "birthDate": "2017-08-10",
-    "parentGoal": "",
+    "parentGoal": "改掉多动和不良行为。",
     "currentDifficulty": "",
-    "timewaverRaw": "",
+    "timewaverRaw": "当前状态：在特定兴趣上表现突出，但缺乏未来规划。关系倒错，孩子变成父母的“父母“—照顾、指导、安抚型父母。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-22"
+    "updatedAt": "2026-04-23"
   },
   {
     "studentId": "A00025",
@@ -270,6 +270,39 @@
     "parentGoal": "提升成绩，不看手机。",
     "currentDifficulty": "",
     "timewaverRaw": "当前状态：注意力不集中，难以维持长时间专注，情绪控制差，自我表达困难。容易紧张、担心成绩、烦躁，完成任务时感到压力。有广泛性焦虑。",
+    "talentPotential": "",
+    "currentStudyStatus": "",
+    "updatedAt": "2026-04-23"
+  },
+  {
+    "studentId": "A00026",
+    "name": "茹靖茵",
+    "birthDate": "2015-11-08",
+    "parentGoal": "提高成绩，情绪稳定。",
+    "currentDifficulty": "",
+    "timewaverRaw": "当前状态：学习状态涣散；不知道自己长大要干什么；关系倒错：孩子在家中成为被“寄予厚望”的对象，北万众瞩目。",
+    "talentPotential": "",
+    "currentStudyStatus": "",
+    "updatedAt": "2026-04-23"
+  },
+  {
+    "studentId": "A00027",
+    "name": "茹靖贻",
+    "birthDate": "2010-03-26",
+    "parentGoal": "提高成绩，情绪稳定。",
+    "currentDifficulty": "",
+    "timewaverRaw": "当前状态：我对很多人不爽； 自性失联。关系倒错导致的其他后果：孩子变得“渣“或浮躁，解离性身份障碍。",
+    "talentPotential": "",
+    "currentStudyStatus": "",
+    "updatedAt": "2026-04-23"
+  },
+  {
+    "studentId": "",
+    "name": "杜家琪",
+    "birthDate": "2013-05-13",
+    "parentGoal": "恢复正常上学。",
+    "currentDifficulty": "",
+    "timewaverRaw": "当前状态：感到烦躁，什么都不想干。存在躯体症状相关障碍。孩子有能力但拒绝尝试。需恢复正常上学。",
     "talentPotential": "",
     "currentStudyStatus": "",
     "updatedAt": "2026-04-23"
