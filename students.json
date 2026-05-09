@@ -5,10 +5,10 @@
     "birthDate": "2011-10-05",
     "parentGoal": "慧霖不再心思纷乱，影响学习。",
     "currentDifficulty": "慧霖觉得现在和外婆舅舅们一起的生活不如意，想选择跟爸爸一起生活，觉得妈妈控制欲太强，如果跟爸爸生活，还能让妈妈更轻松，自己又有更多自由。",
-    "timewaverRaw": "物质及行为成瘾——失控、撒谎、借钱；焦虑及恐惧障碍-社交焦虑，害怕他人评价，可能影响生活和学习；学习涣散状态",
+    "timewaverRaw": "物质及行为成瘾——失控、撒谎、借钱；焦虑及恐惧障碍-社交焦虑，害怕他人评价，情绪极端波动，躁狂期过度活跃、精力充沛；抑郁期无助、情绪低落。",
     "talentPotential": "",
-    "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "currentStudyStatus": "学习时用力过度，容易紧张、担心成绩，明明在学习却效率不高，容易烦躁、急于完成任务。\n认知过载：脑子停不下来，越想越烦。",
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00002",
@@ -16,10 +16,10 @@
     "birthDate": "2015-05-13",
     "parentGoal": "考取名校小升初重点班",
     "currentDifficulty": "能力尚可，但心理承载力不足 + 自我价值高度依赖外界评价，不敢面对困难，只想完成基本任务",
-    "timewaverRaw": "嗜睡；学习过载状态，学习时用力过度，容易紧张，担心成绩或后果，明明在学习，却效率不高，容易烦躁，急于完成任务；情绪低落，对日常活动缺乏兴趣；想逃离现在的生活",
+    "timewaverRaw": "嗜睡；学习过载状态，学习时用力过度，容易紧张，担心成绩或后果，明明在学习，却效率不高，容易烦躁，急于完成任务；情绪低落，对日常活动缺乏兴趣；想逃离现在的生活；害怕比较，回避同学，自我否定。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00003",
@@ -27,10 +27,10 @@
     "birthDate": "2012-09-26",
     "parentGoal": "不要学坏，有学习意愿",
     "currentDifficulty": "容易和坏孩子混迹在一起，曾经吸烟、偷偷买手机等",
-    "timewaverRaw": "在意同伴与社会关系，难以获得安全或接纳，通过迎合、回避或对抗来保护自己；学习涣散状态。",
+    "timewaverRaw": "过度关注身体外貌缺陷，反复照镜子、考虑整容等行为。\n心流临界状态：已开始投入，时间感减弱，对学习任务有兴趣。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00004",
@@ -41,7 +41,7 @@
     "timewaverRaw": "无法控制焦虑，情绪紧张；学习涣散状态；过度期望型家长",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00005",
@@ -52,7 +52,7 @@
     "timewaverRaw": "社交焦虑；广泛性焦虑；理性分析型家长；注意力不集中，难以维持长时间专注；冲动行为和情绪控制差；社交障碍和自我表达困难",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00006",
@@ -63,7 +63,7 @@
     "timewaverRaw": "社交障碍、刻板行为、兴趣狭窄、感觉异常；反复出现强迫思维；关系倒错，被要求承担超出年龄的责任；心流临界状态，对学习任务有兴趣",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00007",
@@ -71,10 +71,10 @@
     "birthDate": "2012-11-15",
     "parentGoal": "保持年级前十，确保奖学金",
     "currentDifficulty": "我保持成绩优秀的承诺中存在恐惧、误解和不被支持的感觉，我感到压力、恐惧沮丧。",
-    "timewaverRaw": "家长执念：不能输给别人。自我怀疑型家长；可能存在早期或长期的创伤；压力时可能诱发情感平淡、意志减退表现；心流临界状态，对学习任务有兴趣",
+    "timewaverRaw": "家长执念：不能输给别人。自我怀疑型家长；在学校长期处于被追赶、被评估的状态，易出现紧张、退缩、表面配合或内在抵抗。学习困难可能与环境节奏及支持方式不匹配有关，而非能力不足。\n被完美主义或耻感情结困扰，对失败过度恐惧。",
     "talentPotential": "",
     "currentStudyStatus": "学习过载，容易紧张，总是担心成绩。",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00008",
@@ -82,10 +82,10 @@
     "birthDate": "2009-12-24",
     "parentGoal": "复学，能正常作息、正常学习，有勇气融入集体，与妈妈改善关系",
     "currentDifficulty": "没有勇气面对困难，害怕失败，害怕社交",
-    "timewaverRaw": "嗜睡；错误信念与心理障碍；限制性信念家长；创伤与应激障碍；心流临界状态，对学习任务有兴趣。",
+    "timewaverRaw": "嗜睡；错误信念与心理障碍；限制性信念家长；创伤与应激障碍；过度关注身体外貌缺陷，反复照镜子、考虑整容等行为。\n需优先进行身体能量复苏，存在躯体化表达（头痛、胃痛等无明确病因的频繁不适）。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00009",
@@ -93,10 +93,10 @@
     "birthDate": "2009-10-31",
     "parentGoal": "保持好成绩。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：已开始投入学习，时间感减弱，对学习任务有兴趣。存在躯体症状及相关障碍。情绪不稳定，回避家庭互动，长时间沉迷手机。在人生中感到漂泊、游移，无法扎根。",
+    "timewaverRaw": "当前状态：学习时用力过度，容易紧张、担心成绩，明明在学习却效率不高，容易烦躁、急于完成任务。情绪不稳定，回避家庭互动，长时间沉迷手机。情绪低落，对日常活动缺乏兴趣，持续的悲伤、无望感、自责。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00010",
@@ -104,10 +104,10 @@
     "birthDate": "2016-03-17",
     "parentGoal": "改掉马虎浮躁的行为，考取高分。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：行为马虎浮躁，文化课基础不扎实。亲子边界僵硬，家长情绪负面。孩子有能力但拒绝尝试。",
+    "timewaverRaw": "当前状态：容易走神、分心，学习时想玩手机，能坐着但推进缓慢。行为马虎浮躁，文化课基础不扎实。持续出现头痛、胃痛等身体不适，查无实据。应优先处理潜在情绪压力，减少对症状的关注。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00011",
@@ -115,10 +115,10 @@
     "birthDate": "2009-11-05",
     "parentGoal": "高中选科都能取得好成绩，与同学相处良好。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：学习涣散，对很多人感到不满。存在强迫及相关障碍。希望跟上学校进度并与同学良好相处。",
+    "timewaverRaw": "当前状态：容易走神、分心，学习时想玩手机，能坐着但推进缓慢。社交焦虑：在社交场合过度焦虑，害怕他人评价，回避社交活动，可能影响日常生活和学习。\n",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00012",
@@ -126,10 +126,10 @@
     "birthDate": "2009-01-09",
     "parentGoal": "学会控制情绪，能坚持上学，保持成绩优势",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：学习涣散，存在情绪与心境障碍。有休学经历，需学会控制情绪，坚持上学，保持成绩优势。",
+    "timewaverRaw": "当前状态：容易走神、分心，学习时想玩手机，能坐着但推进缓慢。强迫症状：反复出现强迫思维（如对污染的恐惧、怀疑锁门等）和强迫行为（如洗手、检查）。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00013",
@@ -137,10 +137,10 @@
     "birthDate": "2009-10-02",
     "parentGoal": "激发内在动力，恢复正常上学",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：存在强迫及相关障碍，挫败耐受力崩塌。对任何事情都没有兴趣，沉迷手机、视频或短剧。需激发内在动力，恢复正常上学。",
+    "timewaverRaw": "当前状态：广泛性焦虑障碍：持续的过度担心，无法控制焦虑，情绪紧张，严重时影响学业和日常生活。\n动力冻结：有能力但拒绝尝试，常说“没意思”“都可以”。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00014",
@@ -148,10 +148,10 @@
     "birthDate": "2012-12-19",
     "parentGoal": "多动症状逐步减弱，学习意愿提升",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：多动症状逐渐减弱，学习意愿有所提升。对学习任务有兴趣，时间感减弱。对手机、视频、短剧沉浸，其他兴趣缺乏。",
+    "timewaverRaw": "当前状态：持续的过度担心，无法控制焦虑，情绪紧张，严重时影响学业和日常生活。\n身体能量紊乱：节律紊乱（昼夜颠倒），睡眠混乱、精力枯竭、白天萎靡。\n动力冻结（执行功能冻结）：想做却做不动，长时间拖延，一提任务就焦虑，回避未来。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00015",
@@ -159,10 +159,10 @@
     "birthDate": "2013-02-07",
     "parentGoal": "减少不良行为，提升学习意。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：对很多人感到不满。兴趣多变，缺乏持久专注。存在不良行为，需提升学习意愿。亲子关系倒错，孩子心理位置与父母平齐或更高。",
+    "timewaverRaw": "当前状态：学习时用力过度，容易紧张、担心成绩，明明在学习却效率不高，容易烦躁、急于完成任务。反复出现强迫思维（如污染恐惧、怀疑锁门）和强迫行为（如洗手、检查）。\n动力冻结（愤怒阴影压抑）：敌对父母，抵触学校，情绪爆炸或冷漠。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00016",
@@ -173,7 +173,7 @@
     "timewaverRaw": "当前状态：情绪波动大，易怒，缺乏情感表达与连接。对任何事情都没有兴趣，沉迷手机、视频或短剧。需减少不良行为，提升专注力。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00017",
@@ -181,21 +181,10 @@
     "birthDate": "2015-06-12",
     "parentGoal": "提升成绩，小升初考入江门二中精英班",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：容易走神、分心，学习时常想玩手机，推进缓慢。兴趣多变，缺乏持久专注。需提升成绩以备考小升初。",
+    "timewaverRaw": "当前状态：已开始投入，时间感减弱，对学习任务有兴趣。创伤后应激障碍（PTSD）：经历创伤事件后，出现闪回、噩梦、情绪麻木、过度警觉、回避创伤相关情境。\n自我否定：觉得自己什么都不行。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
-  },
-  {
-    "studentId": "A00018",
-    "name": "刘晓桐",
-    "birthDate": "2012-09-26",
-    "parentGoal": "提升成绩，能听懂学校课程，跟上学校学习进度",
-    "currentDifficulty": "",
-    "timewaverRaw": "当前状态：在特定兴趣上表现突出，但缺乏未来规划。存在羞耻阴影冻结。需提升成绩，跟上学校课程进度。",
-    "talentPotential": "",
-    "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00019",
@@ -203,10 +192,10 @@
     "birthDate": "2015-08-18",
     "parentGoal": "提升数学成绩，找到天赋爱好。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：已开始投入学习，时间感减弱，对学习任务有兴趣。存在断裂型兴趣与强迫及相关障碍。在人生中感到漂泊，无法扎根。需提升数学成绩，找到天赋爱好。",
+    "timewaverRaw": "当前状态：学习时用力过度，容易紧张、担心成绩，明明在学习却效率不高，容易烦躁、急于完成任务。动力冻结（愤怒阴影压抑）：敌对父母，抵触学校，情绪爆炸或冷漠。\n躯体化表达：头痛、胃痛等无明确病因的频繁不适。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00020",
@@ -214,10 +203,10 @@
     "birthDate": "2018-05-23",
     "parentGoal": "打好英语和奥数基础，为小升初考入优质私立初中做准备。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：情绪不稳定，回避家庭互动，长时间沉迷手机。被期待成为“小大人”或家庭支柱。需打好英语与奥数基础，为小升初做准备。",
+    "timewaverRaw": "当前状态：已开始投入，时间感减弱，对学习任务有兴趣。广泛性焦虑障碍：持续的过度担心，无法控制焦虑，情绪紧张，严重时影响学业和日常生活。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00021",
@@ -225,10 +214,10 @@
     "birthDate": "2008-05-26",
     "parentGoal": "今年高考顺利",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：有广泛性焦虑障碍。对任何事情都没有兴趣，沉迷手机、视频或短剧。需专心高效学习备战高考。",
+    "timewaverRaw": "当前状态：社交焦虑障碍：在社交场合中过度焦虑，害怕他人评价，回避社交活动，可能影响日常生活和学习。\n心流临界状态：已开始投入学习，时间感减弱，对学习任务有兴趣。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00022",
@@ -239,7 +228,7 @@
     "timewaverRaw": "当前状态：已开始投入学习，时间感减弱，对学习任务有兴趣。存在抑郁障碍。在特定兴趣上表现突出，但缺乏未来规划。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00023",
@@ -247,10 +236,10 @@
     "birthDate": "2015-05-11",
     "parentGoal": "改善负面情绪。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：关系倒错，孩子承受来自多方的过高期待，情绪与心境障碍：抑郁障碍",
+    "timewaverRaw": "当前状态：情绪低落，对日常活动缺乏兴趣，持续的悲伤、无望感、自责。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00024",
@@ -258,10 +247,10 @@
     "birthDate": "2017-08-10",
     "parentGoal": "改掉多动和不良行为。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：在特定兴趣上表现突出，但缺乏未来规划。关系倒错，孩子变成父母的“父母“—照顾、指导、安抚型父母。",
+    "timewaverRaw": "当前状态：学习效率问题：学习时用力过度，容易紧张、担心成绩，明明在学习却效率不高，容易烦躁、急于完成任务。\n认知过载：脑子停不下来，越想越烦。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00025",
@@ -269,10 +258,10 @@
     "birthDate": "2011-10-10",
     "parentGoal": "提升成绩，不看手机。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：注意力不集中，难以维持长时间专注，情绪控制差，自我表达困难。容易紧张、担心成绩、烦躁，完成任务时感到压力。有广泛性焦虑。",
+    "timewaverRaw": "当前状态：学习涣散状态：容易走神、分心，学习时常想玩手机，能坐着但推进缓慢。感到烦躁，什么都不想做。\n躯体症状（心理因素相关）：持续出现头痛、胃痛等身体痛苦，查无实据，症状与心理因素相关。\n动力冻结（人格面具崩塌）：从优秀滑向平庸，自我认同崩塌，倾向于逃避责任。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00026",
@@ -280,10 +269,10 @@
     "birthDate": "2015-11-08",
     "parentGoal": "提高成绩，情绪稳定。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：学习状态涣散；不知道自己长大要干什么；关系倒错：孩子在家中成为被“寄予厚望”的对象，北万众瞩目。",
+    "timewaverRaw": "当前状态：容易走神、分心，学习时想玩手机，能坐着但推进缓慢。动力冻结（执行功能冻结）：想做却做不动，长时间拖延，一提任务就焦虑，回避未来。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "A00027",
@@ -291,10 +280,10 @@
     "birthDate": "2010-03-26",
     "parentGoal": "提高成绩，情绪稳定。",
     "currentDifficulty": "",
-    "timewaverRaw": "当前状态：我对很多人不爽； 自性失联。关系倒错导致的其他后果：孩子变得“渣“或浮躁，解离性身份障碍。",
+    "timewaverRaw": "当前状态：社交焦虑障碍：在社交场合过度焦虑，害怕他人评价，回避社交活动，可能影响日常生活和学习。\n动力冻结（愤怒阴影压抑）：敌对父母，抵触学校，情绪爆炸或冷漠。\n未来迷茫：不知道以后要干嘛。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   },
   {
     "studentId": "",
@@ -305,6 +294,6 @@
     "timewaverRaw": "当前状态：感到烦躁，什么都不想干。存在躯体症状相关障碍。孩子有能力但拒绝尝试。需恢复正常上学。",
     "talentPotential": "",
     "currentStudyStatus": "",
-    "updatedAt": "2026-04-23"
+    "updatedAt": "2026-05-08"
   }
 ]
